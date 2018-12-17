@@ -1,14 +1,3 @@
 <button class="btn btn-success mb-3">New Recipe</button>
 
-<a href="#" class="list-group-item clearfix mt-2" *ngFor="let recipe of recipes">
-  <div class="d-flex">
-    <div>
-      <h4>{{ recipe.name }}</h4>
-      <p>{{ recipe.description }}</p>
-    </div>
-    <div class="ml-auto">
-      <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid height-sm">
-    </div>
-  </div>
-</a>
-<app-recipe-item></app-recipe-item>
+<app-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe" (recipeSelected)="onRecipeSelected(recipe)"></app-recipe-item>
