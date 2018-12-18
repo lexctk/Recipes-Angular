@@ -1,3 +1,5 @@
-.height-sm {
-  max-height: 100px;
+.img-thumbnail {
+  max-width: 150px;
+  max-height: 300px;
+  object-fit: cover;
 }

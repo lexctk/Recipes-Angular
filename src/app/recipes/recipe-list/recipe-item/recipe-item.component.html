@@ -1,11 +1,11 @@
 <a href="#" class="list-group-item clearfix mt-2" (click)="onSelectRecipe(recipe)">
   <div class="d-flex">
     <div>
-      <h4>{{ recipe.name }}</h4>
+      <h5>{{ recipe.name }}</h5>
       <p>{{ recipe.description }}</p>
     </div>
     <div class="ml-auto">
-      <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid height-sm">
+      <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-thumbnail">
     </div>
   </div>
 </a>
