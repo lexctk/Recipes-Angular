@@ -3,3 +3,7 @@
   max-height: 300px;
   object-fit: cover;
 }
+
+a {
+  cursor: pointer;
+}

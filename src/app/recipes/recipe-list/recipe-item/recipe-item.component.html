@@ -1,4 +1,4 @@
-<a href="#" class="list-group-item clearfix mt-2" (click)="onSelectRecipe(recipe)">
+<a class="list-group-item clearfix mt-2" [routerLink]="[i]" routerLinkActive="active">
   <div class="d-flex">
     <div>
       <h5>{{ recipe.name }}</h5>
