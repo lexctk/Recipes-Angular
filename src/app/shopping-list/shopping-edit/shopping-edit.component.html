@@ -1,23 +1,19 @@
-<div class="row">
-  <div class="col-12">
-    <form>
-      <div class="row">
-        <div class="col form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" #nameInput>
-        </div>
-        <div class="col form-group">
-          <label for="amount">Amount</label>
-          <input type="number" class="form-control" id="amount" #amountInput>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button class="btn btn-success m-2" type="button" (click)="onAddIngredient()">Add</button>
-          <button class="btn btn-danger m-2" type="button">Delete</button>
-          <button class="btn btn-primary m-2" type="submit">Clear</button>
-        </div>
-      </div>
-    </form>
+<form [formGroup]="shoppingListForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col form-group">
+      <label for="ingredientName">Ingredient Name</label>
+      <input type="text" class="form-control" id="ingredientName" formControlName="ingredientName">
+    </div>
+    <div class="col form-group">
+      <label for="ingredientAmount">Amount</label>
+      <input type="number" class="form-control" id="ingredientAmount" formControlName="ingredientAmount">
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-success m-2" type="submit" [disabled]="!shoppingListForm.valid">{{ editMode ? 'Update' : 'Add' }}</button>
+      <button class="btn btn-danger m-2" type="button" (click)="onDelete()" *ngIf="editMode">Delete</button>
+      <button class="btn btn-primary m-2" type="button" (click)="onClear()">Clear</button>
+    </div>
+  </div>
+</form>
