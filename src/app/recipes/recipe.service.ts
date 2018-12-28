@@ -10,22 +10,7 @@ import {Subject} from 'rxjs';
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Homemade Pizza',
-      'Super awesome pizza!',
-      '/assets/images/homemade-pizza.jpg',
-      [
-        new Ingredient('Pepperoni', 13),
-        new Ingredient('Mushrooms', 15)]),
-    new Recipe(
-      'Apple Pie',
-      'Traditional Apple Pie!',
-      '/assets/images/apple_pie.jpg',
-      [
-        new Ingredient('Apples', 5),
-        new Ingredient('Eggs', 6)])
-  ];
+  private recipes: Recipe[] = [];
 
   constructor(private shoppingListService: ShoppingListService) { }
 
@@ -49,6 +34,11 @@ export class RecipeService {
 
   setRecipe (id: number, newRecipe: Recipe) {
     this.recipes[id] = newRecipe;
+    this.recipesChanged.next(this.recipes);
+  }
+
+  setRecipes (recipes: Recipe[]) {
+    this.recipes = recipes;
     this.recipesChanged.next(this.recipes);
   }
 

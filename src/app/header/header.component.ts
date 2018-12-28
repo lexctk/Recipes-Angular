@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { DataStorageService } from '../shared/data-storage.service';
+import { RecipeService } from '../recipes/recipe.service';
+import { Recipe } from '../recipes/recipe.model';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +11,10 @@ import {AuthService} from '../auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private dataStorageService: DataStorageService,
+              private recipeService: RecipeService) {
+  }
 
   ngOnInit() {
   }
@@ -19,5 +25,15 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
+  }
+
+  onSave() {
+    this.dataStorageService.updateRecipes().subscribe();
+  }
+
+  onFetch() {
+    this.dataStorageService.getRecipes().subscribe((recipes: Recipe[]) => {
+      this.recipeService.setRecipes(recipes);
+    });
   }
 }
