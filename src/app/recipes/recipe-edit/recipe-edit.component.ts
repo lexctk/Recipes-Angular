@@ -93,7 +93,7 @@ export class RecipeEditComponent implements OnInit, CanComponentDeactivate {
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+    this.router.navigate(['../'], {relativeTo: this.activatedRoute}).then();
   }
 
   onDeleteIngredient(index: number) {
