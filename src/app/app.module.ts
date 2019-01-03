@@ -26,7 +26,6 @@ import { AuthModule } from './authentication/auth.module';
     ReactiveFormsModule,
     AuthModule,
     SharedModule,
-    RecipesModule,
     ShoppingListModule,
     AppRoutingModule,
   ],
