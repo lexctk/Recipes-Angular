@@ -14,8 +14,10 @@ export class RecipesComponent implements OnInit {
               private recipeService: RecipeService) { }
 
   ngOnInit() {
-    this.dataStorageService.getRecipes().subscribe((recipes: Recipe[]) => {
-      this.recipeService.setRecipes(recipes);
-    });
+    if (this.recipeService.getRecipes().length <= 0) {
+      this.dataStorageService.getRecipes().subscribe((recipes: Recipe[]) => {
+        this.recipeService.setRecipes(recipes);
+      });
+    }
   }
 }
