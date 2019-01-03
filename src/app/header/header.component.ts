@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../authentication/auth.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
@@ -11,20 +11,12 @@ import { Recipe } from '../recipes/recipe.model';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService,
-              private dataStorageService: DataStorageService,
-              private recipeService: RecipeService) {
+  constructor(private dataStorageService: DataStorageService,
+              private recipeService: RecipeService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
-  }
-
-  onLogin() {
-    this.authService.login();
-  }
-
-  onLogout() {
-    this.authService.logout();
   }
 
   onSave() {
@@ -35,5 +27,9 @@ export class HeaderComponent implements OnInit {
     this.dataStorageService.getRecipes().subscribe((recipes: Recipe[]) => {
       this.recipeService.setRecipes(recipes);
     });
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

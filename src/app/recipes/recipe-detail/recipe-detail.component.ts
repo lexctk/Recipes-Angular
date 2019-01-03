@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../recipe.model';
 import {RecipeService} from '../recipe.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import { AuthService } from '../../authentication/auth.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -14,7 +15,8 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(private recipeService: RecipeService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -25,15 +27,24 @@ export class RecipeDetailComponent implements OnInit {
 
   onAddToShoppingList() {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
-    this.router.navigate(['/shopping-list']);
+    this.router.navigate(['/shopping-list']).then();
   }
 
   onEditRecipe() {
-    this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['edit'], {relativeTo: this.activatedRoute}).then();
+    } else {
+      this.router.navigate(['/login']).then();
+    }
+
   }
 
   onDeleteRecipe() {
-    this.recipeService.removeRecipe(this.i);
-    this.router.navigate(['/recipes']);
+    if (this.authService.isAuthenticated()) {
+      this.recipeService.removeRecipe(this.i);
+      this.router.navigate(['/recipes']).then();
+    } else {
+      this.router.navigate(['/login']).then();
+    }
   }
 }

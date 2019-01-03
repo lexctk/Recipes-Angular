@@ -21,6 +21,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './authentication/register/register.component';
+import { LoginComponent } from './authentication/login/login.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     RecipeEditComponent,
     NotFoundComponent,
-    RecipeStartComponent
+    RecipeStartComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

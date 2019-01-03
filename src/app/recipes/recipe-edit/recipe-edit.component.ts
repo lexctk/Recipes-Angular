@@ -33,6 +33,7 @@ export class RecipeEditComponent implements OnInit, CanComponentDeactivate {
 
       if (this.editMode) {
         const recipe = this.recipeService.getRecipe(this.id);
+
         recipeName = recipe.name;
         recipeDescription = recipe.description;
         recipeImagePath = recipe.imagePath;
@@ -59,7 +60,7 @@ export class RecipeEditComponent implements OnInit, CanComponentDeactivate {
 
   onSubmit() {
     this.changesSaved = true;
-    console.log(this.recipeForm.value['recipeIngredients']);
+
     const recipe = new Recipe(this.recipeForm.value['recipeName'], this.recipeForm.value['recipeDescription'],
       this.recipeForm.value['recipeImagePath'], this.recipeForm.value['recipeIngredients']);
 
@@ -74,8 +75,7 @@ export class RecipeEditComponent implements OnInit, CanComponentDeactivate {
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.changesSaved) {
-      // return confirm('Do you want to discard the changes?');
-      return true;
+      return confirm('Do you want to discard the changes?');
     } else {
       return true;
     }
