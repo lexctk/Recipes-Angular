@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {CanComponentDeactivate} from './can-deactivate-guard.service';
+import {CanComponentDeactivate} from '../../shared/can-deactivate-guard.service';
 import {Observable} from 'rxjs';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../recipe.service';
@@ -74,7 +74,7 @@ export class RecipeEditComponent implements OnInit, CanComponentDeactivate {
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.changesSaved) {
+    if (!this.changesSaved && this.recipeForm.dirty) {
       return confirm('Do you want to discard the changes?');
     } else {
       return true;
