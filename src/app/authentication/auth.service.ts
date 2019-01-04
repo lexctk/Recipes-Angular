@@ -1,28 +1,30 @@
 import {Injectable} from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { Router } from '@angular/router';
+import * as AuthActions from './ngrx/auth.actions';
+import * as fromApp from '../ngrx/app.reducers';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  token: string;
 
-  constructor(private router: Router) {}
-
-  isAuthenticated(): boolean {
-    return this.token != null;
-  }
+  constructor(private router: Router,
+              private store: Store<fromApp.AppState>) {}
 
   login(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
+        this.store.dispatch(new AuthActions.Login());
+
         firebase.auth().currentUser.getIdToken()
-          .then(token => {
-            this.token = token;
+          .then((token: string) => {
+            this.store.dispatch(new AuthActions.SetToken(token));
           });
+
         this.router.navigate(['/recipes']).then();
       })
       .catch(error => {
@@ -33,7 +35,8 @@ export class AuthService {
   logout() {
     firebase.auth().signOut()
       .then(() => {
-        this.token = null;
+        this.store.dispatch(new AuthActions.Logout());
+
         this.router.navigate(['/']).then();
       })
       .catch(error => {
@@ -44,23 +47,22 @@ export class AuthService {
   register(email: string, password: string, displayName: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        const user = firebase.auth().currentUser;
-        user.updateProfile({
+        this.store.dispatch(new AuthActions.Register());
+
+        firebase.auth().currentUser.getIdToken()
+          .then((token: string) => {
+            this.store.dispatch(new AuthActions.SetToken(token));
+          });
+
+        firebase.auth().currentUser.updateProfile({
           displayName: displayName,
           photoURL: null
         }).then();
+
         this.router.navigate(['/recipes']).then();
       })
       .catch(error => {
         console.log(error);
       });
-  }
-
-  getToken() {
-    firebase.auth().currentUser.getIdToken()
-      .then(token => {
-        this.token = token;
-      });
-    return this.token;
   }
 }

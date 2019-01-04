@@ -10,7 +10,7 @@
       Manage Recipe
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-      <ng-container *ngIf="isAuthenticated()">
+      <ng-container *ngIf="(authState | async).authenticated">
         <a class="dropdown-item" (click)="onEditRecipe()">Edit Recipe</a>
         <a class="dropdown-item" (click)="onDeleteRecipe()">Delete Recipe</a>
       </ng-container>
