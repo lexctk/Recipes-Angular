@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../ngrx/app.reducers';
+import * as AuthActions from '../ngrx/auth.actions';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +12,7 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private authService: AuthService) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -24,6 +26,6 @@ export class RegisterComponent implements OnInit {
     const email = this.registerForm.value.email;
     const displayName = this.registerForm.value.displayName;
     const password = this.registerForm.value.password;
-    this.authService.register(email, password, displayName);
+    this.store.dispatch(new AuthActions.TryRegister({email: email, password: password, displayName: displayName}));
   }
 }
